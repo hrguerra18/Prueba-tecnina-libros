@@ -1,0 +1,35 @@
+.jumbotron {
+  background-color: white;
+}
+
+.btn-cues{
+padding: 1rem 2rem;
+border-radius: 300px;
+}
+
+.radious{
+  width: 100px;
+  border-radius: 300px;
+  margin-left: 10px;
+}
+
+.edit-icon{
+  color: rgb(182, 190, 33);
+  cursor: pointer;
+}
+
+.delete-icon{
+  color: rgb(155, 22, 22);
+  cursor: pointer;
+}
+
+.container-card{
+  justify-content:center;
+  align-items:center;
+}
+
+.btn-agregar{
+  width:200px
+}
+
+

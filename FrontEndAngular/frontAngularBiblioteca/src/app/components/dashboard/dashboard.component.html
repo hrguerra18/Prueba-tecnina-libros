@@ -1,0 +1,144 @@
+<app-navbar></app-navbar>
+  <div class="jumbotron text-center">
+    <h1>Bienvenido {{username}}</h1>
+    <p class="lead text-muted">LIBROS</p>
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <button class="btn btn-success btn-block btn-cues" (click)="mostrarCardAdd()">
+                Nuevo libro
+            </button>
+            <div class="text-center" style="margin-top: 30px;">
+            </div>
+            <div class="text-center"  style="margin-top: 30px;">
+            </div>
+        </div>
+    </div>
+    <div class="text-center" *ngIf="loading">
+      <app-loading></app-loading>
+    </div>
+
+<!-- AGREGAR -->
+    <div *ngIf="mostrarCardAgregar" class="card mb-4">
+      <h5 class="card-header">Agregar libro</h5>
+      <div class="card-body">
+       <form [formGroup]="login" class="column">
+       <div class="row">
+        <div class="form-group col-4 text-left">
+          <input type="text" class="form-control" placeholder="Ingrese el title" formControlName="title">
+          <span *ngIf="login.get('title')!.touched && login.get('title')!.hasError('required')" class="text-danger ml-2">
+            El titulo es <strong>requerido</strong>
+          </span>
+        </div>
+
+        <div class="form-group col-4 text-left">
+         <input type="text" class="form-control" placeholder="Ingrese el author" formControlName="autor">
+         <span *ngIf="login.get('autor')!.touched && login.get('autor')!.hasError('required')" class="text-danger ml-2">
+           El autor es <strong>requerido</strong>
+         </span>
+       </div>
+       <div class="form-group col-4 text-left">
+         <input type="text" class="form-control" placeholder="Ingrese publisher" formControlName="publisher">
+         <span *ngIf="login.get('publisher')!.touched && login.get('publisher')!.hasError('required')" class="text-danger ml-2">
+           El publisher es <strong>requerido</strong>
+         </span>
+       </div>
+       <div class="form-group col-4 text-left">
+         <input type="text" class="form-control" placeholder="Ingrese genre" formControlName="genre">
+         <span *ngIf="login.get('genre')!.touched && login.get('genre')!.hasError('required')" class="text-danger ml-2">
+           El genre es <strong>requerido</strong>
+         </span>
+       </div>
+       <div class="form-group col-4 text-left">
+         <input type="number" class="form-control" placeholder="Ingrese el price" formControlName="price">
+         <span *ngIf="login.get('price')!.touched && login.get('price')!.hasError('required')" class="text-danger ml-2">
+           El price es <strong>requerido</strong>
+         </span>
+       </div>
+       </div>
+       <button class="btn btn-success btn-agregar mr-2"[disabled]="login.invalid" (click)="AgregarLibro()">Agregar</button>
+       <button class="btn btn-secondary btn-agregar"  (click)="cancelarCard()">Cancelar</button>
+       </form>
+      </div>
+    </div>
+
+    <!-- CARD EDITAR -->
+    <div *ngIf="cardEditar" class="card mb-4">
+      <h5 class="card-header">Editar libro</h5>
+      <div class="card-body">
+       <form [formGroup]="login" class="column" >
+       <div class="row">
+        <div class="form-group col-4 text-left">
+          <input type="text" class="form-control"  formControlName="title" [ngModel]="libro.title">
+          <span *ngIf="login.get('title')!.touched && login.get('title')!.hasError('required')" class="text-danger ml-2">
+            El titulo es <strong>requerido</strong>
+          </span>
+        </div>
+
+        <div class="form-group col-4 text-left">
+         <input type="text" class="form-control" [ngModel]="libro.autor" formControlName="autor">
+         <span *ngIf="login.get('autor')!.touched && login.get('autor')!.hasError('required')" class="text-danger ml-2">
+           El autor es <strong>requerido</strong>
+         </span>
+       </div>
+       <div class="form-group col-4 text-left">
+         <input type="text" class="form-control" [ngModel]="libro.publisher" formControlName="publisher">
+         <span *ngIf="login.get('publisher')!.touched && login.get('publisher')!.hasError('required')" class="text-danger ml-2">
+           El publisher es <strong>requerido</strong>
+         </span>
+       </div>
+       <div class="form-group col-4 text-left">
+         <input type="text" class="form-control" [ngModel]="libro.genre" formControlName="genre">
+         <span *ngIf="login.get('genre')!.touched && login.get('genre')!.hasError('required')" class="text-danger ml-2">
+           El genre es <strong>requerido</strong>
+         </span>
+       </div>
+       <div class="form-group col-4 text-left">
+         <input type="number" class="form-control" [ngModel]="libro.price" formControlName="price">
+         <span *ngIf="login.get('price')!.touched && login.get('price')!.hasError('required')" class="text-danger ml-2">
+           El price es <strong>requerido</strong>
+         </span>
+       </div>
+       </div>
+       <button class="btn btn-success btn-agregar mr-2" [disabled]="login.invalid" (click)="actualizarLibro()" >Actualizar</button>
+       <button class="btn btn-secondary btn-agregar"  (click)="cancelarCard()">Cancelar</button>
+       </form>
+      </div>
+    </div>
+
+
+    <table class="table" *ngIf="listLibros.length > 0">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">Publisher</th>
+          <th scope="col">Genre</th>
+          <th scope="col">Price</th>
+          <th scope="col">Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let libro of listLibros;">
+          <td>{{libro.title}}</td>
+          <td>{{libro.autor}}</td>
+          <td>{{libro.publisher}}</td>
+          <td>{{libro.genre}}</td>
+          <td>{{libro.price}}</td>
+          <td>
+            <span (click)="mostrarCardEditar(libro)" class="material-icons edit-icon mr-2">
+              edit
+            </span>
+            <span class="material-icons delete-icon" (click)="eliminarLibro(libro.id!)">
+              delete
+            </span>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+    </table>
+    <h2 *ngIf="listLibros.length == 0">No se encontraron libros para mostrar</h2>
+
+
+</div>

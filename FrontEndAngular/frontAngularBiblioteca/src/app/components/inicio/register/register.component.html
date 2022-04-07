@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="card col-8" style="padding: 30px">
+       <div class="text-center">
+         <form [formGroup]="formLogin" (ngSubmit)="registerUser()">
+           <h2>Crea una cuenta!</h2>
+           <div class="form-group text-left" >
+             <input type="text" class="form-control" placeholder="Ingresa el usuario" formControlName="username">
+             <span class="text-danger ml-2" *ngIf="formLogin.get('username')?.touched && formLogin.get('username')?.hasError('required')">
+               El usuario es <strong>requerido</strong>
+             </span>
+           </div>
+
+           <div class="form-group text-left">
+             <input type="password" class="form-control" placeholder="Ingresa la contraseña" formControlName="password">
+             <span *ngIf="formLogin.get('password')?.touched && formLogin.get('password')?.hasError('required')" class="text-danger ml-2">
+               La contraseña es <strong>requerida</strong>
+             </span>
+           </div>
+
+           <div class="text-center">
+             <button class="btn btn-success mr-2"  [disabled]="formLogin.invalid">Crear</button>
+             <button class="btn btn-info" routerLink="/inicio">Volver</button>
+           </div>
+
+         </form>
+       </div>
+  </div>
+</div>
